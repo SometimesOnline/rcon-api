@@ -3,10 +3,8 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop # db 구성중에만 적용, 추후 변경 예정
-
+      ddl-auto: create-drop # 추후 변경 예정.
 logging:
   level:
-    root: debug
     sql: debug
     web: debug
