@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: secret
+
+logging:
+  level:
+    root: info
+    sql: info
+    web: info
