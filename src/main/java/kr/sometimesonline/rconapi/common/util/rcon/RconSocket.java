@@ -1,4 +1,4 @@
-package kr.sometimesonline.rconapi.rcon;
+package kr.sometimesonline.rconapi.common.util.rcon;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +16,7 @@ import java.util.Random;
 //  커스텀 예외로 변경.
 
 @Slf4j
-public class Rcon {
+public class RconSocket {
     private final Random random = new Random();
     private final Socket socket;
 
@@ -27,7 +27,7 @@ public class Rcon {
      * @param password Rcon 비밀번호
      * @throws IOException IOException
      */
-    public Rcon(String host, int port, String password) throws IOException {
+    public RconSocket(String host, int port, String password) throws IOException {
         this.socket = new Socket(host, port);
 
         RconPacket request = authenticate(password);
@@ -48,7 +48,7 @@ public class Rcon {
      * @throws IOException IOException
      */
     public RconPacket executeCommand(String command) throws IOException {
-        return sendPacket(RconPacketType.SERVERDATA_EXECCOMMAND, command);
+        return sendPacket(PacketType.SERVERDATA_EXECCOMMAND, command);
     }
 
     /**
@@ -101,10 +101,10 @@ public class Rcon {
     }
 
     private RconPacket authenticate(String password) throws IOException {
-        return sendPacket(RconPacketType.SERVERDATA_AUTH, password);
+        return sendPacket(PacketType.SERVERDATA_AUTH, password);
     }
 
-    private RconPacket sendPacket(RconPacketType requestPacketType, String body) throws IOException {
+    private RconPacket sendPacket(PacketType requestPacketType, String body) throws IOException {
         RconPacket rconPacket = new RconPacket(random.nextInt(), requestPacketType, body);
         log.debug(String.format("rcon sending request: %s", rconPacket));
 

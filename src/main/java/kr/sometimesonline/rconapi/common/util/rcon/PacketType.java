@@ -1,11 +1,11 @@
-package kr.sometimesonline.rconapi.rcon;
+package kr.sometimesonline.rconapi.common.util.rcon;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RconPacketType {
+public enum PacketType {
     SERVERDATA_AUTH(3),
     SERVERDATA_AUTH_RESPONSE(2),
     SERVERDATA_EXECCOMMAND(2),

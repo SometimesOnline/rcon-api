@@ -1,4 +1,4 @@
-package kr.sometimesonline.rconapi.rcon;
+package kr.sometimesonline.rconapi.common.util.rcon;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -24,7 +24,7 @@ public class RconPacket {
         this.body = body;
     }
 
-    public RconPacket(int requestId, RconPacketType packetType, String body) {
+    public RconPacket(int requestId, PacketType packetType, String body) {
         this(requestId, packetType.getTypeValue(), body);
     }
 

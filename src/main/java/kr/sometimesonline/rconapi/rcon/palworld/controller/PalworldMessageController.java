@@ -1,4 +1,4 @@
-package kr.sometimesonline.rconapi.game.palworld.controller;
+package kr.sometimesonline.rconapi.rcon.palworld.controller;
 
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;

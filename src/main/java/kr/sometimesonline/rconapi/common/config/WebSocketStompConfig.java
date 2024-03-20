@@ -1,4 +1,4 @@
-package kr.sometimesonline.rconapi.config;
+package kr.sometimesonline.rconapi.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
