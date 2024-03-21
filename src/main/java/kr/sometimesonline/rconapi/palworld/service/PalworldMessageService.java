@@ -26,7 +26,7 @@ public class PalworldMessageService {
         rconSocket.executeCommand(command);
         RconMessage response = rconSocket.readResponse();
 
-        return response.getBody();
+        return response.getBody().isEmpty() ? "success" : response.getBody();
     }
 
     public void disconnectRcon(String sessionId) throws IOException {

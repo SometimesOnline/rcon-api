@@ -1,5 +1,6 @@
 package kr.sometimesonline.rconapi.palworld.controller;
 
+import kr.sometimesonline.rconapi.common.rcon.vo.MessageResponseVo;
 import kr.sometimesonline.rconapi.common.rcon.vo.SocketCreateVo;
 import kr.sometimesonline.rconapi.palworld.service.PalworldMessageService;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +11,6 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 
-
-//todo 리턴에 사용할 응답객체 만들기. ex) MessageResponseVo
 @RequiredArgsConstructor
 @Controller
 @MessageMapping("/palworld") //  == "/app/palworld"
@@ -21,21 +20,20 @@ public class PalworldMessageController {
     private final PalworldMessageService messageService;
 
     @MessageMapping("/connect")
-    public String connectRcon(SocketCreateVo socketCreateVO, SimpMessageHeaderAccessor headerAccessor) throws IOException {
-        String sessionId = headerAccessor.getSessionId();
-        messageService.connectRcon(socketCreateVO, sessionId);
-        return "Rcon connected\n" + "WebSocket sessionId: " + sessionId;
+    public MessageResponseVo<String> connectRcon(SocketCreateVo socketCreateVO, SimpMessageHeaderAccessor headerAccessor) throws IOException {
+        messageService.connectRcon(socketCreateVO, headerAccessor.getSessionId());
+        return new MessageResponseVo<>("Rcon Connected");
     }
 
     @MessageMapping("/command")
-    public String executeCommand(String command, SimpMessageHeaderAccessor headerAccessor) throws IOException {
+    public MessageResponseVo<String> executeCommand(String command, SimpMessageHeaderAccessor headerAccessor) throws IOException {
         String responseMessage = messageService.executeCommand(command, headerAccessor.getSessionId());
-        return "command: " + command + "\n response: " + responseMessage;
+        return new MessageResponseVo<>(responseMessage);
     }
 
     @MessageMapping("/disconnect")
-    public String disconnectRcon(SimpMessageHeaderAccessor headerAccessor) throws IOException {
+    public MessageResponseVo<String> disconnectRcon(SimpMessageHeaderAccessor headerAccessor) throws IOException {
         messageService.disconnectRcon(headerAccessor.getSessionId());
-        return "Rcon Disconnected";
+        return new MessageResponseVo<>("Rcon Disconnected");
     }
 }
