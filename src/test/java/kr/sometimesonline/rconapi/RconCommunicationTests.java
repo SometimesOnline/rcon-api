@@ -1,7 +1,7 @@
 package kr.sometimesonline.rconapi;
 
-import kr.sometimesonline.rconapi.common.util.rcon.RconSocket;
-import kr.sometimesonline.rconapi.common.util.rcon.RconPacket;
+import kr.sometimesonline.rconapi.common.rcon.RconSocket;
+import kr.sometimesonline.rconapi.common.rcon.RconPacket;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

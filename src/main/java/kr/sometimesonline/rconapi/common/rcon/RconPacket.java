@@ -1,4 +1,4 @@
-package kr.sometimesonline.rconapi.common.util.rcon;
+package kr.sometimesonline.rconapi.common.rcon;
 
 import lombok.Getter;
 import lombok.ToString;

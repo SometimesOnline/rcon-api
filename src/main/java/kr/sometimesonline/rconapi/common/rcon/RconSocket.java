@@ -1,4 +1,4 @@
-package kr.sometimesonline.rconapi.common.util.rcon;
+package kr.sometimesonline.rconapi.common.rcon;
 
 import lombok.extern.slf4j.Slf4j;
 
