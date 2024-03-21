@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum PacketType {
+public enum MessageType {
     SERVERDATA_AUTH(3),
     SERVERDATA_AUTH_RESPONSE(2),
     SERVERDATA_EXECCOMMAND(2),

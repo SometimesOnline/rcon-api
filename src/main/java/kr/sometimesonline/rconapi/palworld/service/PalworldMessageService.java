@@ -1,6 +1,6 @@
 package kr.sometimesonline.rconapi.palworld.service;
 
-import kr.sometimesonline.rconapi.common.rcon.RconPacket;
+import kr.sometimesonline.rconapi.common.rcon.RconMessage;
 import kr.sometimesonline.rconapi.common.rcon.RconSocket;
 import kr.sometimesonline.rconapi.common.rcon.repository.RconSocketRepository;
 import kr.sometimesonline.rconapi.common.rcon.vo.SocketCreateVo;
@@ -24,7 +24,7 @@ public class PalworldMessageService {
         RconSocket rconSocket = rconSocketRepository.getRconSocket(sessionId);
 
         rconSocket.executeCommand(command);
-        RconPacket response = rconSocket.readResponse();
+        RconMessage response = rconSocket.readResponse();
 
         return response.getBody();
     }

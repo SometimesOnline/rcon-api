@@ -30,8 +30,8 @@ public class RconSocket {
     public RconSocket(String host, int port, String password) throws IOException {
         this.socket = new Socket(host, port);
 
-        RconPacket request = authenticate(password);
-        RconPacket response = readResponse();
+        RconMessage request = authenticate(password);
+        RconMessage response = readResponse();
 
         if (response.getRequestId() == -1) {
             socket.close();
@@ -47,8 +47,8 @@ public class RconSocket {
      * @return 서버에 전달한 값
      * @throws IOException IOException
      */
-    public RconPacket executeCommand(String command) throws IOException {
-        return sendPacket(PacketType.SERVERDATA_EXECCOMMAND, command);
+    public RconMessage executeCommand(String command) throws IOException {
+        return sendPacket(MessageType.SERVERDATA_EXECCOMMAND, command);
     }
 
     /**
@@ -56,7 +56,7 @@ public class RconSocket {
      * @return 서버로 부터 받은 값
      * @throws IOException IOException
      */
-    public RconPacket readResponse() throws IOException {
+    public RconMessage readResponse() throws IOException {
 
         InputStream inputStream = socket.getInputStream();
 
@@ -86,7 +86,7 @@ public class RconSocket {
             throw new IOException("Incomplete ending read");
         }
 
-        RconPacket response = new RconPacket(requestId, type, body);
+        RconMessage response = new RconMessage(requestId, type, body);
         log.debug(String.format("rcon received response: %s", response));
 
         return response;
@@ -100,19 +100,19 @@ public class RconSocket {
         this.socket.close();
     }
 
-    private RconPacket authenticate(String password) throws IOException {
-        return sendPacket(PacketType.SERVERDATA_AUTH, password);
+    private RconMessage authenticate(String password) throws IOException {
+        return sendPacket(MessageType.SERVERDATA_AUTH, password);
     }
 
-    private RconPacket sendPacket(PacketType requestPacketType, String body) throws IOException {
-        RconPacket rconPacket = new RconPacket(random.nextInt(), requestPacketType, body);
-        log.debug(String.format("rcon sending request: %s", rconPacket));
+    private RconMessage sendPacket(MessageType requestMessageType, String body) throws IOException {
+        RconMessage rconMessage = new RconMessage(random.nextInt(), requestMessageType, body);
+        log.debug(String.format("rcon sending request: %s", rconMessage));
 
-        byte[] packetBytes = rconPacket.generatePacketBytes();
+        byte[] packetBytes = rconMessage.generatePacketBytes();
         OutputStream outputStream = this.socket.getOutputStream();
         outputStream.write(packetBytes);
         outputStream.flush();
         
-        return rconPacket;
+        return rconMessage;
     }
 }

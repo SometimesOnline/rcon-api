@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 @Getter
 @ToString
-public class RconPacket {
+public class RconMessage {
 
     private final int size;
     private final int requestId;
@@ -17,15 +17,15 @@ public class RconPacket {
     private final String body;
 
 
-    public RconPacket(int requestId, int packetTypeValue, String body) {
+    public RconMessage(int requestId, int packetTypeValue, String body) {
         this.size = body.length() + 10; // requestId = 4 byte, packetType = 4 byte, body terminator(null) = 1 byte, packet terminator(null) = 1 byte
         this.requestId = requestId;
         this.packetType = packetTypeValue;
         this.body = body;
     }
 
-    public RconPacket(int requestId, PacketType packetType, String body) {
-        this(requestId, packetType.getTypeValue(), body);
+    public RconMessage(int requestId, MessageType messageType, String body) {
+        this(requestId, messageType.getTypeValue(), body);
     }
 
     public int getPacketSize() {
