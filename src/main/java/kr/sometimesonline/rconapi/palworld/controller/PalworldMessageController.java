@@ -4,6 +4,8 @@ import kr.sometimesonline.rconapi.common.rcon.vo.MessageResponseVo;
 import kr.sometimesonline.rconapi.common.rcon.vo.SocketCreateVo;
 import kr.sometimesonline.rconapi.palworld.service.PalworldMessageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.annotation.SendToUser;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 @MessageMapping("/palworld") //  == "/app/palworld"
@@ -22,18 +25,24 @@ public class PalworldMessageController {
     @MessageMapping("/connect")
     public MessageResponseVo<String> connectRcon(SocketCreateVo socketCreateVO, SimpMessageHeaderAccessor headerAccessor) throws IOException {
         messageService.connectRcon(socketCreateVO, headerAccessor.getSessionId());
-        return new MessageResponseVo<>("Rcon Connected");
+        return new MessageResponseVo<>(true, "Rcon Connected");
     }
 
     @MessageMapping("/command")
     public MessageResponseVo<String> executeCommand(String command, SimpMessageHeaderAccessor headerAccessor) throws IOException {
         String responseMessage = messageService.executeCommand(command, headerAccessor.getSessionId());
-        return new MessageResponseVo<>(responseMessage);
+        return new MessageResponseVo<>(true, responseMessage);
     }
 
     @MessageMapping("/disconnect")
     public MessageResponseVo<String> disconnectRcon(SimpMessageHeaderAccessor headerAccessor) throws IOException {
         messageService.disconnectRcon(headerAccessor.getSessionId());
-        return new MessageResponseVo<>("Rcon Disconnected");
+        return new MessageResponseVo<>(true, "Rcon Disconnected");
+    }
+
+    @MessageExceptionHandler
+    public MessageResponseVo<Exception> exceptionMessage(Exception exception) {
+        log.error(exception.getMessage());
+        return new MessageResponseVo<>(false, exception);
     }
 }

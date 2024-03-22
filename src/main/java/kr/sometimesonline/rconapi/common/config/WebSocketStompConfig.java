@@ -11,7 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/rconWebSocket").setAllowedOrigins("http://rcon.tareun.kr","http://rcon.sometimesonline.kr");
+        registry.addEndpoint("/rconWebSocket").setAllowedOrigins("http://rcon.tareun.kr","http://rcon.sometimesonline.kr","http://localhost:8100");
         registry.addEndpoint("/testToEpic").setAllowedOrigins("https://apic.app/"); // 테스트용. https://apic.app/online/#/tester 에서 사용.
     }
 
