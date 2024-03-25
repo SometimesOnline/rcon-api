@@ -3,6 +3,7 @@ package kr.sometimesonline.rconapi.palworld.service;
 import kr.sometimesonline.rconapi.common.rcon.RconMessage;
 import kr.sometimesonline.rconapi.common.rcon.RconSocket;
 import kr.sometimesonline.rconapi.common.rcon.repository.RconSocketRepository;
+import kr.sometimesonline.rconapi.common.rcon.vo.CommandRequestVo;
 import kr.sometimesonline.rconapi.common.rcon.vo.SocketCreateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,10 @@ public class PalworldMessageService {
         rconSocketRepository.putRconSocket(sessionId, createdSocket);
     }
 
-    public String executeCommand(String command, String sessionId) throws IOException {
+    public String executeCommand(CommandRequestVo commandRequestVo, String sessionId) throws IOException {
         RconSocket rconSocket = rconSocketRepository.getRconSocket(sessionId);
 
-        rconSocket.executeCommand(command);
+        rconSocket.executeCommand(commandRequestVo.command());
         RconMessage response = rconSocket.readResponse();
 
         return response.getBody().isEmpty() ? "success" : response.getBody();

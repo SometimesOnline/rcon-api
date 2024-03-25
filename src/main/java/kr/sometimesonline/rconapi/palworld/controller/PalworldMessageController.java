@@ -1,5 +1,6 @@
 package kr.sometimesonline.rconapi.palworld.controller;
 
+import kr.sometimesonline.rconapi.common.rcon.vo.CommandRequestVo;
 import kr.sometimesonline.rconapi.common.rcon.vo.MessageResponseVo;
 import kr.sometimesonline.rconapi.common.rcon.vo.SocketCreateVo;
 import kr.sometimesonline.rconapi.palworld.service.PalworldMessageService;
@@ -29,7 +30,7 @@ public class PalworldMessageController {
     }
 
     @MessageMapping("/command")
-    public MessageResponseVo<String> executeCommand(String command, SimpMessageHeaderAccessor headerAccessor) throws IOException {
+    public MessageResponseVo<String> executeCommand(CommandRequestVo command, SimpMessageHeaderAccessor headerAccessor) throws IOException {
         String responseMessage = messageService.executeCommand(command, headerAccessor.getSessionId());
         return new MessageResponseVo<>(true, responseMessage);
     }
@@ -41,8 +42,8 @@ public class PalworldMessageController {
     }
 
     @MessageExceptionHandler
-    public MessageResponseVo<Exception> exceptionMessage(Exception exception) {
+    public MessageResponseVo<String> exceptionMessage(Exception exception) {
         log.error(exception.getMessage());
-        return new MessageResponseVo<>(false, exception);
+        return new MessageResponseVo<>(false, exception.getMessage());
     }
 }
