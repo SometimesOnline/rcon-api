@@ -3,13 +3,13 @@ package kr.sometimesonline.rconapi.common.rcon.repository;
 import kr.sometimesonline.rconapi.common.rcon.RconSocket;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class RconSocketRepository {
-    private final Map<String, RconSocket> socketRepo = new HashMap<>();
+    private final Map<String, RconSocket> socketRepo = new ConcurrentHashMap<>();
 
     public void putRconSocket(String sessionId, RconSocket rconSocket) {
         socketRepo.put(sessionId, rconSocket);
