@@ -3,6 +3,7 @@ package kr.sometimesonline.rconapi.common.rcon.repository;
 import kr.sometimesonline.rconapi.common.rcon.RconSocket;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,5 +19,9 @@ public class RconSocketRepository {
     public RconSocket getRconSocket(String sessionId) {
         return Optional.ofNullable(socketRepo.get(sessionId))
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Session Id"));
+    }
+
+    public void disconnectRconSocket(String sessionId) throws IOException {
+        socketRepo.remove(sessionId).disconnect();
     }
 }

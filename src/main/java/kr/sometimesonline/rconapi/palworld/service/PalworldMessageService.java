@@ -31,6 +31,6 @@ public class PalworldMessageService {
     }
 
     public void disconnectRcon(String sessionId) throws IOException {
-        rconSocketRepository.getRconSocket(sessionId).disconnect();
+        rconSocketRepository.disconnectRconSocket(sessionId);
     }
 }
