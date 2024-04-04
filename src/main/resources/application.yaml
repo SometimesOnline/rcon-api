@@ -6,3 +6,6 @@ logging:
     root: info
     sql: info
     web: info
+server:
+  servlet:
+    context-path: /api
