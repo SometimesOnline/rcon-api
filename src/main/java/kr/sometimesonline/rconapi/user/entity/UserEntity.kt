@@ -3,7 +3,7 @@ package kr.sometimesonline.rconapi.user.entity
 import jakarta.persistence.*
 import kr.sometimesonline.rconapi.user.vo.UserResponseVo
 
-// todo 코틀린에서의 JPA Entity 선언 방식 조금 더 고려 후 수정
+// todo 코틀린에서의 JPA Entity 선언 방식 조금 더 고려 후 수정 ex) null
 @Entity
 @Table(name = "USER")
 class UserEntity {
